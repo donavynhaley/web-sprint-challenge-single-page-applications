@@ -8,24 +8,24 @@ const PizzaForm = (props) => {
     name: "",
     size: "",
     sauce: "",
-    toppings: {
-      Pepperoni: false,
-      Sassuage: false,
-      "Canadian Bacon": false,
-      "Spicy Italian Sassuage": false,
-      "Grilled Chicken": false,
-      Onions: false,
-      "Green Pepper": false,
-      "Diced Tomatos": false,
-      "Black Olives": false,
-      "Roasted Garlic": false,
-      "Artichoke Hearts": false,
-      "Three Cheese": false,
-      " Pineapple": false,
-      "Extra Cheese": false,
-    },
     subsitute: false,
     special: "",
+  });
+  const [toppings, setToppings] = useState({
+    Pepperoni: false,
+    Sassuage: false,
+    "Canadian Bacon": false,
+    "Spicy Italian Sassuage": false,
+    "Grilled Chicken": false,
+    Onions: false,
+    "Green Pepper": false,
+    "Diced Tomatos": false,
+    "Black Olives": false,
+    "Roasted Garlic": false,
+    "Artichoke Hearts": false,
+    "Three Cheese": false,
+    " Pineapple": false,
+    "Extra Cheese": false,
   });
 
   const [post, setPost] = useState([]);
@@ -59,6 +59,8 @@ const PizzaForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(toppings);
+    setNewPizza({ ...newPizza, toppings });
     axios.post("https://reqres.in/api/users", newPizza).then((res) => {
       setPost(res.data);
       console.log(res.data);
@@ -76,14 +78,15 @@ const PizzaForm = (props) => {
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
   };
-
+  const handleToppings = (name) => {
+    setToppings({ ...toppings, [name]: !toppings[name] });
+  };
   const formSchema = Yup.object().shape({
     name: Yup.string()
       .required("Must include a name")
       .min(2, "Name must be longer than two characters"),
     size: Yup.string().required("Must choose Size"),
     sauce: Yup.string().required("Must Choose a sauce"),
-    toppings: Yup.string().required("Must Choose toppings"),
     subsitute: Yup.string(),
     special: Yup.string(),
   });
@@ -156,7 +159,7 @@ const PizzaForm = (props) => {
               value="Spinach Alfredo"
               onChange={(event) => handleChange(event)}
             />
-            Spinach Alfredo
+            z Spinach Alfredo
           </div>
         </label>
         <label htmlFor="toppingInput">
@@ -170,8 +173,8 @@ const PizzaForm = (props) => {
                     type="checkbox"
                     name="toppings"
                     value={topping}
-                    checked={newPizza.toppings.topping}
-                    onChange={(event) => handleChange(event)}
+                    checked={toppings[topping]}
+                    onChange={(event) => handleToppings(topping)}
                   />
                 </div>
               );
