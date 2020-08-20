@@ -16,7 +16,7 @@ const PizzaForm = (props) => {
     Sassuage: false,
     "Canadian Bacon": false,
     "Spicy Italian Sassuage": false,
-    "Grilled Chicken": false,
+    GrilledChicken: false,
     Onions: false,
     "Green Pepper": false,
     "Diced Tomatos": false,
@@ -104,6 +104,7 @@ const PizzaForm = (props) => {
         <label htmlFor="nameInput">
           <h4>Name for the Order</h4>
           <input
+            id="nameInput"
             type="text"
             name="name"
             placeholder="Whats your name?"
@@ -127,6 +128,7 @@ const PizzaForm = (props) => {
           <h4>Choice of Sauce</h4>
           <div className="sauceOption">
             <input
+              id="red"
               type="radio"
               name="sauce"
               value="Origional Red"
@@ -170,6 +172,7 @@ const PizzaForm = (props) => {
                 <div className="topping">
                   <p>{topping}</p>
                   <input
+                    className={topping}
                     type="checkbox"
                     name="toppings"
                     value={topping}
@@ -201,7 +204,9 @@ const PizzaForm = (props) => {
           />
         </label>
         <div id="order">
-          <button disabled={buttonDisabled}>Add to Order</button>
+          <button id="addToOrder" disabled={buttonDisabled}>
+            Add to Order
+          </button>
         </div>
       </form>
     </div>
